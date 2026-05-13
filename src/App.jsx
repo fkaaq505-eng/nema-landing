@@ -3,8 +3,55 @@ import {
   ArrowRight, Upload, Wand2, Send, CheckCircle2,
   TrendingUp, DollarSign, Play, Star, Menu, X,
   Building2, Eye, Zap, ScanLine, Camera, MapPin,
-  Clock, Layers, ChevronRight, Shield, Users,
+  Clock, Layers, ChevronRight, Shield, Users, Plus, Minus,
 } from 'lucide-react';
+
+/* ──────────────────── FAQ ─── */
+const FAQS = [
+  { q: 'Do I need any equipment or 3D cameras?', a: 'No. Nema works entirely from standard listing photos — even phone shots. The minimum is 8 photos. No Matterport camera, no photographer visit, nothing.' },
+  { q: 'How long does it actually take to generate a tour?', a: 'Under 10 minutes for most properties. You upload photos, the AI processes them, and you get a shareable link. Larger properties with 10+ rooms may take up to 20 minutes.' },
+  { q: 'Can I sell this as my own product (white-label)?', a: 'Yes — Pro and Agency plans include white-label branding. Agents see your brand name and logo on the tour, not Nema\'s. Most users charge $750–$1,200 per property.' },
+  { q: 'What kind of results are agents seeing?', a: 'Beta users report 2–4× more showing requests on listings with virtual tours versus flat photos. Agents typically recoup the cost of one tour within the first additional showing it generates.' },
+  { q: 'Do I need technical skills to use Nema?', a: 'None at all. If you can upload a file and copy a link, you can use Nema. The business model is: get photos from agent → run through Nema → send them the link → invoice.' },
+  { q: 'What\'s the best way to find agents to cold email?', a: 'Google "real estate agent [your city]", check Zillow\'s agent directory, or search Instagram. Target agents with active listings — they have an immediate need. We include proven cold email templates in Pro.' },
+  { q: 'Can I try it before subscribing?', a: 'Yes. The pay-as-you-go plan is $49 per property with no subscription. Most users upgrade to Pro after their first 2–3 client deliveries, since it pays for itself immediately.' },
+  { q: 'What format is the final tour delivered in?', a: 'A shareable web link the agent can embed directly in their MLS listing, email to buyers, or share on social media. Works on all devices — desktop, tablet, and mobile.' },
+];
+
+function FAQ() {
+  const [open, setOpen] = React.useState(null);
+  return (
+    <section className="py-24 px-5 border-t" style={{ borderColor: 'var(--b)' }}>
+      <div className="max-w-3xl mx-auto">
+        <div className="mb-12" data-reveal>
+          <p className="label text-xs mb-3" style={{ color: 'var(--m2)' }}>FAQ</p>
+          <h2 className="h1">Everything you want to know.</h2>
+        </div>
+        <div className="space-y-2">
+          {FAQS.map((f, i) => (
+            <div key={i} data-reveal data-d={String(i % 4)}
+              className="rounded-xl border overflow-hidden transition-all duration-200"
+              style={{ borderColor: open === i ? 'var(--ba)' : 'var(--b)', background: open === i ? 'rgba(245,166,35,0.04)' : 'var(--s1)' }}>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                className="w-full flex items-center justify-between px-5 py-4 text-left gap-4">
+                <span className="font-semibold text-sm">{f.q}</span>
+                <span className="shrink-0" style={{ color: 'var(--m2)' }}>
+                  {open === i ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                </span>
+              </button>
+              {open === i && (
+                <div className="px-5 pb-5 text-sm leading-relaxed" style={{ color: 'var(--m1)' }}>
+                  {f.a}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 const CTA_URL = 'https://tally.so/r/D4A1E5';
 const CTA_TEXT = 'Get Your First Tour Free';
@@ -602,6 +649,9 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      {/* ─ FAQ ─ */}
+      <FAQ />
 
       {/* ─ Final CTA ─ */}
       <section className="py-24 px-5">
